@@ -14,7 +14,7 @@ import "./Ownable.sol";
 import "./Address.sol";
 import "./SSTMetaData.sol";
 
-contract SST is Ownable, UntoldMetaData {
+contract SST is Ownable, SSTMetaData {
 	event SwapAndLiquefy(
 		uint256 tokensSwapped,
 		uint256 ethReceived,
@@ -90,9 +90,9 @@ contract SST is Ownable, UntoldMetaData {
 	IUniswapV2Router02 public immutable uniswapV2Router;
 	address public immutable uniswapV2WETHPair;
 
-	address public immutable UntoldFund;
+	address public immutable SSTFund;
 
-	constructor(address routerAddress, address UntoldFundAddress) {
+	constructor(address routerAddress, address SSTFundAddress) {
 		/**
 		 *@dev Gives all the reflection to the deplyer (the first owner) of the contract upon creation.
 		 */
@@ -108,11 +108,11 @@ contract SST is Ownable, UntoldMetaData {
 		// Saves the UniswapV2Router in a state variable
 		uniswapV2Router = _uniswapV2Router;
 
-		UntoldFund = UntoldFundAddress;
+		SSTFund = SSTFundAddress;
 
 		_isExcludedFromFees[owner()] = true;
 		_isExcludedFromFees[address(this)] = true;
-		_isExcludedFromFees[UntoldFundAddress] = true;
+		_isExcludedFromFees[SSTFundAddress] = true;
 
 		emit Transfer(address(0), _msgSender(), _tokenSupply);
 	}
